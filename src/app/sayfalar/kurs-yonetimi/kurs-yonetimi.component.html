@@ -1,0 +1,66 @@
+<div *ngIf="yetki" class="container mt-3">
+    <div class="col-md-12 m-3">
+        <button class="btn btn-primary" (click)="kursIslemBelirle('yeni')">Yeni Kurs</button>
+    </div>
+    <div *ngIf="formGoster" class="col-md-6 kurs-kayit m-3">
+        <form>
+            <div class="form-group">
+              <label for="kursAdi">Kurs Adı</label>
+              <input type="text" class="form-control" id="kursAdi" name="kursAdi" [(ngModel)]="kurs.ad">
+            </div>
+            <div class="form-group">
+                <label for="sahip">Kurs Sahibi</label>
+                <input type="text" class="form-control" id="sahip" name="sahip" [(ngModel)]="kurs.sahip">
+              </div>
+              <div class="form-group">
+                <label for="fiyat">Fiyat</label>
+                <input type="text" class="form-control" id="fiyat" name="fiyat" [(ngModel)]="kurs.fiyat">
+              </div>
+              <div class="form-group">
+                <label for="kategori">Kategori</label>
+                <input type="text" class="form-control" id="kategori" name="kategori" [(ngModel)]="kurs.kategori">
+              </div>
+              <div class="form-group">
+                <label for="seviye">Seviye</label>
+                <input type="text" class="form-control" id="seviye" name="seviye" [(ngModel)]="kurs.seviye">
+              </div>
+            <button type="submit" class="btn btn-success" (click)="kursKaydet()"> {{kursIslem=='yeni'?'Ekle':'Güncelle'}}</button>
+            <button type="submit" class="btn btn-secondary ml-3" (click)="formGoster=false;"> Vazgeç</button>
+          </form>
+    </div>
+   <div class="col-md-12">
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Ad</th>
+            <th>Sahip</th>
+            <th>Fiyat</th>
+            <th>Kategori</th>
+            <th>Seviye</th>
+            <th>Guncelle</th>
+            <th>Sil</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let kurs of kurslar;let i=index;">
+            <th>{{i+1}}</th>
+            <td>{{ kurs?.payload?.doc.data().ad}}</td>
+            <td>{{ kurs?.payload?.doc.data().sahip}}</td>
+            <td>{{ kurs?.payload?.doc.data().fiyat}}</td>
+            <td>{{ kurs?.payload?.doc.data().kategori}}</td>
+            <td>{{ kurs?.payload?.doc.data().seviye}}</td>
+            <td><button class="btn btn-success" (click)="kursGuncelle(kurs)">Güncelle</button></td>
+            <td><button class="btn btn-danger" (click)="kursSil(kurs)">Sil</button></td>
+          </tr>
+        </tbody>
+      </table>
+   </div>
+   
+</div>
+
+<div *ngIf="!yetki" class="container my-3">
+    <div class="alert alert-danger" role="alert">
+       Bu sayfayı için yetkiniz bulunmuyor
+      </div>
+</div>
